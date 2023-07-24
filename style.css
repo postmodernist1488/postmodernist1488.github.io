@@ -1,10 +1,11 @@
 aside {
     width: 30%;
-    padding-left: 15px;
+    padding-left: 50px;
     margin-left: 15px;
-    float: right;
+    float: left;
     font-style: italic;
     background-color: lightgray;
+    height: 100vh;
 }
 * {
     font-family: Comic Sans MS;
