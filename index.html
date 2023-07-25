@@ -6,17 +6,18 @@
         <script src="index.js"></script>
     </head>
     <body>
-        <aside>
-            <ul>
-                <button onclick="change_content('main.html')">main</button>
-                <button onclick="change_content('funi.html')">funi</button>
-                <button onclick="change_content('link2.html')">link2</button>
-            </ul>
-        </aside>
+        <div style="" class="sidebar">
+            <div style="color: lightgray; text-align: center; padding-bottom: 5%;">
+                my websit
+            </div>
+            <button style="background-color: #81a1c1" onclick="set_content('main.html')">int main</button>
+            <button style="background-color: #a3be8c" onclick="set_content('funi.html')">funi</button>
+            <button style="background-color: #ebcb8b" onclick="set_content('link.html')">link</button>
+        </div>
         <div id="contents"></div>
+        <footer>
+            Copyright postmodernist1488
+        </footer>
     </body>
-    <footer>
-        Copyright postmodernist1488
-    </footer>
 </html>
 

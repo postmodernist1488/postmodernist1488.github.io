@@ -1,21 +1,43 @@
-aside {
+.sidebar {
     width: 15%;
-    margin-left: 15px;
-    margin-right: 15px;
-    float: left;
-    font-style: italic;
-    background-color: lightgray;
-    height: 100vh;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #2f343f; 
+    padding-right: 1%;
+    padding-left: 1%;
+}
+
+.sidebar button {
+    display: block;
+    border: none;
+    width: 100%;
+}
+
+button:hover {
+  background-image: linear-gradient(rgb(0 0 0/10%) 0 0);
+}
+button:active {
+  background-image: linear-gradient(rgb(0 0 0/20%) 0 0);
+}
+
+#contents {
+    min-height: 100vh;
+    padding-left: 20px;
+    margin-left: 17%;
 }
 
 footer {
-    position: absolute;
-    font-size: 20pt;
+    position: fixed;
     bottom: 0;
-    right: 0
+    right: 0;
+    text-align: right;
+    font-size: 0.5em;
 }
 
 * {
     font-family: "Comic Sans MS", "Comic Sans";
     font-size: 40pt;
+    color: #2f343f;
 }
