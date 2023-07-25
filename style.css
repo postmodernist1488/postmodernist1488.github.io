@@ -1,13 +1,21 @@
 aside {
-    width: 30%;
-    padding-left: 50px;
+    width: 15%;
     margin-left: 15px;
-    float: right;
+    margin-right: 15px;
+    float: left;
     font-style: italic;
     background-color: lightgray;
     height: 100vh;
 }
+
+footer {
+    position: absolute;
+    font-size: 20pt;
+    bottom: 0;
+    right: 0
+}
+
 * {
-    font-family: Comic Sans MS;
-    font-size: 2vw;
+    font-family: "Comic Sans MS", "Comic Sans";
+    font-size: 40pt;
 }

@@ -1,11 +1,11 @@
-function load_html(path, id) {
+function change_content(path) {
     var xhr=new XMLHttpRequest();
     xhr.open('GET', path, true);
     xhr.onreadystatechange = function() {
         if (this.readyState!==4) return;
         if (this.status!==200) return;
-        document.getElementById(id).innerHTML= this.responseText;
+        document.getElementById('contents').innerHTML= this.responseText;
     };
     xhr.send();
 }
-load_html('sidebar.html', 'sidebar')
+change_content('main.html')
