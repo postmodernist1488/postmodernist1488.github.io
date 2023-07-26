@@ -1,10 +1,13 @@
 var rainbow_checkbox;
 function set_content(page) {
-    rainbow_checkbox.checked = false;
     fetch('pages/' + page + '.html')
     .then(response => response.text())
     .then(html => {
-        document.getElementById('contents').innerHTML = html;
+        contents.innerHTML = html;
+        if (rainbow_checkbox.checked) {
+            initial_state.clear()
+            rainbowize_contents()
+        }
     });
     location.hash = "#" + page
 }
@@ -23,7 +26,7 @@ const initial_state = new Map();
 function rainbow(element) {
     if (element.style && element.childNodes.length == 1) {
         initial_state.set(element, element.innerHTML)
-        element.innerHTML = rainbowize_text(element.innerHTML)
+        element.innerHTML = rainbowize_text(element.innerText)
     } else {
         element.childNodes.forEach(child => {
             rainbow(child)
@@ -38,14 +41,21 @@ function derainbow(element) {
     initial_state.clear()
 }
 
-function wrap_text_in_spans(contents) {
-    for (let i = 0; i < contents.childNodes.length; i++) {
-        if (contents.childNodes[i].nodeType == Node.TEXT_NODE) {
-            const text = contents.childNodes[i].data;
-            contents.replaceChild(document.createElement('span'), contents.childNodes[i]);
-            contents.childNodes[i].innerHTML = text;
+function wrap_text_in_spans(element) {
+    for (let i = 0; i < element.childNodes.length; i++) {
+        if (element.childNodes[i].nodeType == Node.TEXT_NODE) {
+            const text = element.childNodes[i].data;
+            element.replaceChild(document.createElement('span'), element.childNodes[i]);
+            element.childNodes[i].innerHTML = text;
         }
     }
+}
+
+function rainbowize_contents() {
+    if (contents.childNodes.length > 1) {
+        wrap_text_in_spans(contents);
+    }
+    rainbow(contents);
 }
 
 window.onload = () => {
@@ -64,12 +74,8 @@ window.onload = () => {
     });
 
     rainbow_checkbox.addEventListener('change', () => {
-        const contents = document.getElementById('contents');
         if (rainbow_checkbox.checked) {
-            if (contents.childNodes.length > 1) {
-                wrap_text_in_spans(contents);
-            }
-            rainbow(contents);
+            rainbowize_contents()
         } else {
             derainbow(contents);
         }
