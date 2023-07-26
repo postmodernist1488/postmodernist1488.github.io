@@ -6,13 +6,21 @@
         <script src="index.js"></script>
     </head>
     <body>
-        <div style="" class="sidebar">
-            <div style="color: lightgray; text-align: center; padding-bottom: 5%;">
+        <div class="checkbox-with-text">
+            <label> 
+                <input type="checkbox" id="sidebar-toggle"/>hide sidebar</label>
+        </div>
+        <div id="sidebar" class="sidebar">
+            <div style="color: lightgray; text-align: center; padding-bottom: 5%; margin-top: 20%">
                 my websit
             </div>
             <button style="background-color: #81a1c1" onclick="set_content('main.html')">int main</button>
             <button style="background-color: #a3be8c" onclick="set_content('funi.html')">funi</button>
             <button style="background-color: #ebcb8b" onclick="set_content('link.html')">link</button>
+            <div class="checkbox-with-text">
+                <label> 
+                    <input type="checkbox" id="rainbow-toggle"/>rainbow</label>
+            </div>
         </div>
         <div id="contents"></div>
         <footer>
