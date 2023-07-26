@@ -22,6 +22,10 @@ label {
     display: block;
 }
 
+img {
+    max-width: 100%;
+}
+
 #sidebar-toggle {
     position: relative;
 }

@@ -1,11 +1,12 @@
 var rainbow_checkbox;
-function set_content(path) {
+function set_content(page) {
     rainbow_checkbox.checked = false;
-    fetch(path)
+    fetch('pages/' + page + '.html')
     .then(response => response.text())
     .then(html => {
         document.getElementById('contents').innerHTML = html;
     });
+    location.hash = "#" + page
 }
 
 function rainbowize_text(text) {
@@ -47,9 +48,13 @@ function wrap_text_in_spans(contents) {
     }
 }
 
-window.onload = ()=> {
+window.onload = () => {
     rainbow_checkbox = document.getElementById('rainbow-toggle');
-    set_content('main.html');
+    if (location.hash) {
+        set_content(location.hash.substring(1))
+    } else {
+        set_content('main');
+    }
 
     const sidebar_checkbox = document.getElementById('sidebar-toggle');
     const sidebar = document.getElementById('sidebar');
