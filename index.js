@@ -1,7 +1,7 @@
 var rainbow_checkbox;
 function set_content(page) {
     fetch('pages/' + page + '.html')
-    .then(response => response.text())
+    .then(response => response.ok ? response.text(): '404: this page does not exist')
     .then(html => {
         contents.innerHTML = html;
         if (rainbow_checkbox.checked) {
