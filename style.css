@@ -57,8 +57,13 @@ footer {
     font-size: 0.5em;
 }
 
+@font-face {
+    font-family: "Comic Sans MS";
+    src: local("Comic Sans MS"), url("/assets/Comic Sans MS.ttf") format("truetype");
+}
+
 * {
-    font-family: "Comic Sans MS", "Comic Sans";
+    font-family: "Comic Sans MS";
     font-size: 40pt;
     color: #2f343f;
 }
