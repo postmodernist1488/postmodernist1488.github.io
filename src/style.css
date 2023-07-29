@@ -57,6 +57,42 @@ footer {
     right: 0;
     text-align: right;
     font-size: 0.5rem;
+    padding: 10px;
+}
+
+#restart-game {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#typing-game-input {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+progress {
+    box-sizing: border-box;
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+    border-radius: 7px; 
+    height: 22px;
+    box-shadow: 1px 1px 4px rgba( 0, 0, 0, 0.2 );
+}
+
+progress::-webkit-progress-bar {
+    border-radius: 7px;
+    background-color: lightgray;
+}
+
+progress::-webkit-progress-value {
+    background-color: red;
+    border-radius: 7px;
+}
+
+progress::-moz-progress-bar {
+    background-color: red;
 }
 
 footer a {

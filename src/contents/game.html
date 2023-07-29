@@ -1,0 +1,10 @@
+<canvas width=1000 height=800>
+    typing game
+</canvas>
+<div style="width: 50%">
+    <progress id="healthbar" value="100" max="100" >
+    </progress>
+    <input id="typing-game-input" onkeydown="return isAlpha(event.key);">
+</div>
+<button id="restart-game" onclick="start_game()">Restart</button>
+<script src="typing_game.js"></script>

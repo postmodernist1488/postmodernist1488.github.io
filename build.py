@@ -29,6 +29,8 @@ def generate_files(template_path, contents_path):
 
 def main():
 
+    os.chdir(sys.path[0])
+    
     if not os.path.exists(BUILD_DIR):
         os.mkdir(BUILD_DIR)
     elif not os.path.isdir(BUILD_DIR):

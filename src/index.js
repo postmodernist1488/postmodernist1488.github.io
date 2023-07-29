@@ -1,3 +1,7 @@
+function random_color() {
+    return Math.floor(Math.random()*16777215).toString(16);
+}
+
 function rainbowize_text(text) {
     res = '';
     for (let i = 0; i < text.length; i++) {
