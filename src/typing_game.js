@@ -143,7 +143,7 @@ function update(dt) {
     }
     let i = 0;
     while (i < circles.length) {
-        if ((circles[i].word) == text_input.value) {
+        if (circles[i].word == text_input.value.toLowerCase()) {
             const destroyed = circles.splice(i, 1)[0];
             destroy_animation(destroyed)
             console.log(particles)
