@@ -28,14 +28,16 @@
                 </div>
             </fieldset>
         </div>
-        <div id="contents"><canvas width=1000 height=800>
-    typing game
-</canvas>
-<div style="width: 50%">
+        <div id="contents"><center>
+    <div style="width: 50%">
+    <canvas width=1000 height=800>
+        typing game
+    </canvas>
     <progress id="healthbar" value="100" max="100" >
     </progress>
     <input id="typing-game-input" onkeydown="return valid(event.key);">
-</div>
+    </div>
+</center>
 <label style="color: black; font-size: 20pt; position: absolute; top: 20px; right: 60px; text-align: right"
     for="difficulty-slider" id="difficulty-label">Difficulty:</label>
 <input style="width: 10%; position: absolute; top: 80px; right: 0; margin-right: 60px" type="range" min="1" max="4" value="1" id="difficulty-slider">
