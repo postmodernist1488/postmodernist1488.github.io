@@ -1,9 +1,12 @@
 const healthbar = document.getElementById("healthbar");
-const text_input = document.getElementById("typing-game-input")
+const text_input = document.getElementById("typing-game-input");
 const canvas = document.querySelector("canvas");
+const difficultySlider = document.getElementById("difficulty-slider");
+const difficultyLabel = document.getElementById("difficulty-label");
 const ctx = canvas.getContext("2d");
 var words;
-var circles = [];
+var circles;
+var particles;
 var score = 0.0;
 var highscore = 0.0;
 ctx.fillStyle = "red";
@@ -18,13 +21,35 @@ function random_word() {
 }
 
 async function onPageLoad() {
-    //TODO: display loading screen
     const response = await fetch('/assets/words.json')
     if (!response.ok) {
         throw new Error("File could not be fetched!!");
     }
     words = await response.json();
     start_game();
+}
+class Particle {
+    constructor(x, y, size, dx, dy, color, ttl) {
+        this.x = x, 
+        this.y = y, 
+        this.size = size, 
+        this.dx = dx, 
+        this.dy= dy, 
+        this.color = color
+        this.timeOfDeath = performance.now() + ttl
+    }
+
+    update(dt) {
+        this.x += this.dx * dt;
+        this.y += this.dy * dt;
+    }
+
+    draw(ctx) {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+        ctx.fill();
+    }
 }
 
 class Circle {
@@ -51,18 +76,18 @@ class Circle {
         ctx.font = "20px sans-serif";
         ctx.fillText(this.word, this.x, this.y);
     }
-    collides_with(other) {
+    collides_with(other, threshold) {
         const a = this.x - other.x;
         const b = this.y - other.y;
 
-        return Math.sqrt(a * a + b * b) < this.radius + other.radius;
+        return Math.sqrt(a * a + b * b) + threshold < this.radius + other.radius;
     }
 }
 
 var player = new Circle(canvas.width / 2, canvas.height * 0.9, 50, 0, "you", "green");
 
-function isAlpha(ch) {
-    return ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z';
+function valid(ch) {
+    return ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '-';
 }
 
 var time_til_next_circle = 1.0;
@@ -79,6 +104,37 @@ function spawn_circle() {
     );
 }
 
+function destroy_animation(destroyed) {
+    //decomposing the destroyed circle
+    let material = destroyed.radius;
+    while (material > 0) {
+        let size = (Math.random() + 1) * destroyed.radius / 10;
+        let dx = (Math.random() * 2 - 1) * destroyed.velocity;
+        let dy = (Math.random() * 2 - 1) * destroyed.velocity;
+        particles.push(
+            new Particle(
+                destroyed.x,
+                destroyed.y,
+                size,
+                dx,
+                dy,
+                color = destroyed.color,
+                Math.random() * 3000 + 2000
+            )
+        )
+        material -= size;
+    }
+}
+
+const Difficulty = {
+    Easy: 0.001,
+    Medium: 0.003,
+    Hard: 0.005,
+    Ultrahard: 0.01,
+}
+
+var currentDifficulty;
+
 function update(dt) {
     time_til_next_circle -= dt;
     if (time_til_next_circle <= 0) {
@@ -88,34 +144,51 @@ function update(dt) {
     let i = 0;
     while (i < circles.length) {
         if ((circles[i].word) == text_input.value) {
-            //TODO: destroy anim
             const destroyed = circles.splice(i, 1)[0];
+            destroy_animation(destroyed)
+            console.log(particles)
             text_input.value = '';
             score += destroyed.word.length;
-            spawn_factor *= (1 - 0.01 * destroyed.word.length)
+            spawn_factor *= (1 - currentDifficulty * destroyed.word.length);
             if (circles.length == 0) {
                 time_til_next_circle /= 3;
             } else if (circles.length == 1) {
                 time_til_next_circle /= 2;
             }
+        } else {
+            i++;
         }
-        i++;
     }
     for (let i = 0; i < circles.length; i++) {
-        circles[i].move_to(canvas.width / 2, canvas.height * 0.9, dt);
-        if (player.collides_with(circles[i])) {
-            const damage_per_sec = 10;
+        if (player.collides_with(circles[i], 10)) {
+            const damage_per_sec = 5;
             healthbar.value -= dt * damage_per_sec;
             if (healthbar.value <= 0) gameActive = false;
+        } else {
+            circles[i].move_to(canvas.width / 2, canvas.height * 0.9, dt);
         }
+    }
+    i = 0;
+    while (i < particles.length) {
+        if (particles[i].timeOfDeath <= performance.now()) particles.splice(i, 1);
+        else i++;
+    }
+    for (let i = 0; i < particles.length; i++) {
+        particles[i].update(dt)
     }
 }
 
 function draw() {
     // clear the screen
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+    player.draw(ctx)
+
     for (circle of circles) {
         circle.draw(ctx)
+    }
+    for (particle of particles) {
+        particle.draw(ctx)
     }
 
     ctx.textAlign = "right"
@@ -124,7 +197,6 @@ function draw() {
     ctx.fillText(`Score: ${score}`, canvas.width, 20);
     ctx.fillText(`Highcore: ${highscore}`, canvas.width, 40);
 
-    player.draw(ctx)
 }
 
 var lastRender = 0
@@ -157,11 +229,32 @@ function loop(timestamp) {
 function start_game() {
     score = 0;
     circles = [];
+    particles = [];
     gameActive = true;
     healthbar.value = 100;
     time_til_next_circle = 1.0;
+    spawn_factor = 1;
     text_input.focus();
     lastRender = window.performance.now();
+    switch (difficultySlider.value) {
+        case "1":
+            currentDifficulty = Difficulty.Easy;
+            difficultyLabel.innerHTML = 'Difficulty (Easy):'
+            console.log(difficultyLabel)
+            break;
+        case "2":
+            currentDifficulty = Difficulty.Medium;
+            difficultyLabel.innerHTML = 'Difficulty (Medium):'
+            break;
+        case "3":
+            currentDifficulty = Difficulty.Hard;
+            difficultyLabel.innerHTML = 'Difficulty (Hard):'
+            break;
+        case "4":
+            currentDifficulty = Difficulty.Ultrahard;
+            difficultyLabel.innerHTML = 'Difficulty (Ultrahard):'
+            break;
+    }
     window.requestAnimationFrame(loop);
 }
 
