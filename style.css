@@ -1,0 +1,75 @@
+.sidebar {
+    width: 15%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #2f343f; 
+    padding-right: 1%;
+    padding-left: 1%;
+    z-index: 0;
+    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+.checkbox-with-text {
+    position: fixed;
+    z-index: 1;
+}
+
+label {
+    font-size: 10pt;
+    color: white;
+    display: block;
+}
+
+img {
+    max-width: 100%;
+}
+
+#sidebar-toggle {
+    position: relative;
+}
+
+.sidebar a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+  background-image: linear-gradient(rgb(0 0 0/10%) 0 0);
+}
+
+.sidebar a:active {
+  background-image: linear-gradient(rgb(0 0 0/20%) 0 0);
+}
+
+#contents {
+    min-height: 100vh;
+    padding-left: 20px;
+    margin-left: 17%;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    text-align: right;
+    font-size: 0.5rem;
+}
+
+footer a {
+    font-size: 0.5rem;
+}
+
+@font-face {
+    font-family: "Comic Sans MS";
+    src: local("Comic Sans MS"), url("/assets/Comic Sans MS.ttf") format("truetype");
+}
+
+* {
+    font-family: "Comic Sans MS";
+    font-size: 40pt;
+    color: #2f343f;
+}
