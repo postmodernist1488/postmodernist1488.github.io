@@ -4,7 +4,11 @@
 <div style="width: 50%">
     <progress id="healthbar" value="100" max="100" >
     </progress>
-    <input id="typing-game-input" onkeydown="return isAlpha(event.key);">
+    <input id="typing-game-input" onkeydown="return valid(event.key);">
 </div>
+<div id="game-settings">
 <button id="restart-game" onclick="start_game()">Restart</button>
+<label style="color: black; font-size: 20pt" for="difficulty-slider" id="difficulty-label">Difficulty:</label>
+<input style="width: 50%" type="range" min="1" max="4" value="1" id="difficulty-slider">
+</div>
 <script src="typing_game.js"></script>
