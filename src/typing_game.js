@@ -1,6 +1,8 @@
 const healthbar = document.getElementById("healthbar");
 const text_input = document.getElementById("typing-game-input");
 const canvas = document.querySelector("canvas");
+canvas.style.marginRight = "auto";
+canvas.style.marginLeft = "auto";
 const difficultySlider = document.getElementById("difficulty-slider");
 const difficultyLabel = document.getElementById("difficulty-label");
 const ctx = canvas.getContext("2d");
@@ -191,11 +193,11 @@ function draw() {
         particle.draw(ctx)
     }
 
-    ctx.textAlign = "right"
+    ctx.textAlign = "left"
     ctx.fillStyle = "black"
     ctx.font = "20px sans-serif";
-    ctx.fillText(`Score: ${score}`, canvas.width, 20);
-    ctx.fillText(`Highcore: ${highscore}`, canvas.width, 40);
+    ctx.fillText(`Score: ${score}`, 0, 20);
+    ctx.fillText(`Highcore: ${highscore}`, 0, 40);
 
 }
 
