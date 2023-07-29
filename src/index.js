@@ -1,17 +1,3 @@
-var rainbow_checkbox;
-function set_content(page) {
-    fetch('pages/' + page + '.html')
-    .then(response => response.ok ? response.text(): '404: this page does not exist')
-    .then(html => {
-        contents.innerHTML = html;
-        if (rainbow_checkbox.checked) {
-            initial_state.clear()
-            rainbowize_contents()
-        }
-    });
-    location.hash = "#" + page
-}
-
 function rainbowize_text(text) {
     res = '';
     for (let i = 0; i < text.length; i++) {
@@ -59,15 +45,14 @@ function rainbowize_contents() {
 }
 
 window.onload = () => {
-    rainbow_checkbox = document.getElementById('rainbow-toggle');
-    if (location.hash) {
-        set_content(location.hash.substring(1))
-    } else {
-        set_content('main');
-    }
-
     const sidebar_checkbox = document.getElementById('sidebar-toggle');
     const sidebar = document.getElementById('sidebar');
+    const rainbow_checkbox = document.getElementById('rainbow-toggle');
+
+    if (localStorage.getItem("rainbowEnabled") == "true") {
+        rainbow_checkbox.checked = true;
+        rainbowize_contents();
+    }
 
     sidebar_checkbox.addEventListener('change', () => {
         sidebar.style.transform = sidebar_checkbox.checked ? 'translate(-100%, 0)' : 'none';
@@ -75,9 +60,11 @@ window.onload = () => {
 
     rainbow_checkbox.addEventListener('change', () => {
         if (rainbow_checkbox.checked) {
+            localStorage.setItem("rainbowEnabled", "true")
             rainbowize_contents()
         } else {
             derainbow(contents);
+            localStorage.setItem("rainbowEnabled", "false")
         }
     });
 

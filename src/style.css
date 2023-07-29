@@ -30,16 +30,18 @@ img {
     position: relative;
 }
 
-.sidebar button {
+.sidebar a {
     display: block;
-    border: none;
     width: 100%;
+    text-align: center;
+    text-decoration: none;
 }
 
-button:hover {
+.sidebar a:hover {
   background-image: linear-gradient(rgb(0 0 0/10%) 0 0);
 }
-button:active {
+
+.sidebar a:active {
   background-image: linear-gradient(rgb(0 0 0/20%) 0 0);
 }
 
@@ -54,7 +56,11 @@ footer {
     bottom: 0;
     right: 0;
     text-align: right;
-    font-size: 0.5em;
+    font-size: 0.5rem;
+}
+
+footer a {
+    font-size: 0.5rem;
 }
 
 @font-face {
