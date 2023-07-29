@@ -17,7 +17,7 @@
             </div>
             <a style="background-color: #81a1c1" href="/index.html">int main</a>
             <a style="background-color: #a3be8c" href="/funi.html">funi</a>
-            <a style="background-color: #ebcb8b" href="/link.html">link</a>
+            <a style="background-color: #ebcb8b" href="/game.html">game</a>
             <a style="background-color: #f59335" href="/link2.html">link2</a>
             <a style="background-color: #bf616a" href="/link3.html">link3</a>
             <fieldset>
@@ -28,18 +28,16 @@
                 </div>
             </fieldset>
         </div>
-        <div id="contents"><canvas width=1000 height=1000>
+        <div id="contents"><canvas width=1000 height=800>
     typing game
 </canvas>
-<script>
-    const canvas = document.querySelector("canvas");
-    const ctx = canvas.getContext("2d");
-    ctx.fillStyle = "black";
-    // Add a rectangle at (10, 10) with size 100x100 pixels
-    ctx.font = "50px Comic Sans MS"
-    console.log(ctx.font)
-    ctx.fillText("Hello world", 10, 50);
-</script>
+<div style="width: 50%">
+    <progress id="healthbar" value="100" max="100" >
+    </progress>
+    <input id="typing-game-input" onkeydown="return isAlpha(event.key);">
+</div>
+<button id="restart-game" onclick="start_game()">Restart</button>
+<script src="typing_game.js"></script>
 
 
         </div>
