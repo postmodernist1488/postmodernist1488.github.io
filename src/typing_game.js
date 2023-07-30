@@ -6,6 +6,8 @@ canvas.style.marginLeft = "auto";
 const difficultySlider = document.getElementById("difficulty-slider");
 const difficultyLabel = document.getElementById("difficulty-label");
 const ctx = canvas.getContext("2d");
+ctx.canvas.width  = document.getElementById("contents").offsetWidth;
+ctx.canvas.height = window.innerHeight - 150;
 var words;
 var circles;
 var particles;
