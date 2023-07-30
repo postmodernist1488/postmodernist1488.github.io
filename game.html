@@ -4,23 +4,21 @@
         <link rel="stylesheet" href="style.css">
         <title>postmodernist1848 personal website</title>
         <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script src="index.js"></script>
     </head>
     <body>
-        <div class="checkbox-with-text">
-            <label> 
-                <input type="checkbox" id="sidebar-toggle"/>hide sidebar</label>
+        <div class="checkbox-with-text" style="position: fixed; top: 0; margin: 20px" id="sidebar-checkbox-with-text">
+            <label id="sidebar-toggle-label"><input type="checkbox" id="sidebar-toggle"/>hide sidebar</label>
         </div>
         <div id="sidebar" class="sidebar">
-            <div style="color: lightgray; text-align: center; padding-bottom: 5%; margin-top: 20%">
-                my websit
-            </div>
+            <div id="my-websit">my websit</div>
             <a style="background-color: #81a1c1" href="/index.html">int main</a>
             <a style="background-color: #a3be8c" href="/funi.html">funi</a>
             <a style="background-color: #ebcb8b" href="/game.html">game</a>
             <a style="background-color: #f59335" href="/link2.html">link2</a>
             <a style="background-color: #bf616a" href="/link3.html">link3</a>
-            <fieldset>
+            <fieldset style="height: 10%">
                 <legend style="font-size: 0.5em; color: white">Funi stuff</legend>
                 <div class="checkbox-with-text">
                     <label> 
@@ -28,20 +26,18 @@
                 </div>
             </fieldset>
         </div>
-        <div id="contents"><center>
-    <div style="width: 50%">
+        <div id="contents"><label for="difficulty-slider" id="difficulty-label">Difficulty:</label>
+<input type="range" min="1" max="4" value="1" id="difficulty-slider">
+<button style="position: absolute; top: 150px; margin-right: 20px" id="restart-game" onclick="start_game()">Restart</button>
+
     <canvas width=1000 height=800>
         typing game
     </canvas>
-    <progress id="healthbar" value="100" max="100" >
-    </progress>
-    <input id="typing-game-input" onkeydown="return valid(event.key);">
-    </div>
-</center>
-<label style="color: black; font-size: 20pt; position: absolute; top: 20px; right: 60px; text-align: right"
-    for="difficulty-slider" id="difficulty-label">Difficulty:</label>
-<input style="width: 10%; position: absolute; top: 80px; right: 0; margin-right: 60px" type="range" min="1" max="4" value="1" id="difficulty-slider">
-<button style="position: absolute; top: 150px; margin-right: 60px" id="restart-game" onclick="start_game()">Restart</button>
+<div class="center" style="width: 50%; margin: 0 auto">
+        <progress id="healthbar" value="100" max="100"> </progress>
+        <input id="typing-game-input" onkeydown="return valid(event.key);">
+</div>
+
 <script src="typing_game.js"></script>
 
 
