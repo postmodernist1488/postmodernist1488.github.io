@@ -1,12 +1,15 @@
-function random_color() {
-    return Math.floor(Math.random()*16777215).toString(16);
+function getRandomColor() {
+    return '#' + getRandomColorNumber().toString(16).padStart(6, '0');
+}
+function getRandomColorNumber() {
+    return Math.floor(Math.random()*16777215);
 }
 
 function rainbowize_text(text) {
     res = '';
     for (let i = 0; i < text.length; i++) {
-        const color = Math.floor(Math.random()*16777215).toString(16)
-        res += `<span style='color:#${color}'>${text.charAt(i)}</span>`;
+        const color = getRandomColor();
+        res += `<span style='color:${color}'>${text.charAt(i)}</span>`;
     }
     return res;
 }

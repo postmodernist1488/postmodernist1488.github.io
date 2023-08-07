@@ -1,6 +1,7 @@
 const healthbar = document.getElementById("healthbar");
 const text_input = document.getElementById("typing-game-input");
 const canvas = document.querySelector("canvas");
+const rainbowCheckbox = document.getElementById("rainbow-toggle");
 canvas.style.marginRight = "auto";
 canvas.style.marginLeft = "auto";
 const difficultySlider = document.getElementById("difficulty-slider");
@@ -23,7 +24,6 @@ function random_word() {
     const randomIndex = Math.floor(Math.random() * words.length);
     return words[randomIndex];
 }
-
 async function onPageLoad() {
     const response = await fetch('/assets/words.json')
     if (!response.ok) {
@@ -56,6 +56,15 @@ class Particle {
     }
 }
 
+function textColor(background) {
+    let luminance = (0.299 * (background >> 16 & 0xff) +
+                     0.587 * (background >>  8 & 0xff) +
+                     0.114 * (background >>  0 & 0xff)) / 255
+    console.log(luminance);
+    if (luminance > 0.5) return "black";
+    else return "white";
+}
+
 class Circle {
     constructor(x, y, radius, velocity, word, color) {
         this.x = x;
@@ -63,7 +72,8 @@ class Circle {
         this.radius = radius;
         this.velocity = velocity;
         this.word = word;
-        this.color = color;
+        this.color = '#' + color.toString(16).padStart(6, '0');
+        this.textColor = textColor(color);
     }
     move_to(x, y, dt) {
         const dir = Math.atan2(y - this.y, x - this.x);
@@ -75,8 +85,8 @@ class Circle {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
         ctx.fill();
-        ctx.fillStyle = "black"
-        ctx.textAlign = "center"
+        ctx.fillStyle = this.textColor;
+        ctx.textAlign = "center";
         ctx.font = "20px sans-serif";
         ctx.fillText(this.word, this.x, this.y);
     }
@@ -88,7 +98,7 @@ class Circle {
     }
 }
 
-var player = new Circle(canvas.width / 2, canvas.height * 0.9, 50, 0, "you", "green");
+var player = new Circle(canvas.width / 2, canvas.height * 0.9, 50, 0, "you", 0x00ff00);
 
 function valid(ch) {
     return ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '-';
@@ -98,13 +108,16 @@ var time_til_next_circle = 1.0;
 var spawn_factor = 1.0
 
 function spawn_circle() {
-    circles.push(new Circle(
-        Math.random() * canvas.width, 
-        canvas.height * 0.2, 
-        Math.random() * 50 + 10, 
-        50, 
-        random_word(), 
-        "red")
+    word = random_word();
+    circles.push(
+        new Circle(
+            Math.random() * canvas.width, 
+            canvas.height * 0.2, 
+            word.length * 5 + 10,
+            80 - word.length * 5, 
+            word, 
+            rainbowCheckbox.checked ? getRandomColorNumber(): 0xff0000
+        )
     );
 }
 
@@ -131,10 +144,22 @@ function destroy_animation(destroyed) {
 }
 
 const Difficulty = {
-    Easy: 0.001,
-    Medium: 0.003,
-    Hard: 0.005,
-    Ultrahard: 0.01,
+    Easy: {
+        name: 'Easy',
+        value: 0.001,
+    },
+    Medium: {
+        name: 'Medium',
+        value: 0.003,
+    },
+    Hard: {
+        name: 'Hard',
+        value: 0.005,
+    },
+    Ultrahard: {
+        name: 'Ultrahard',
+        value: 0.01,
+    }
 }
 
 var currentDifficulty;
@@ -150,10 +175,9 @@ function update(dt) {
         if (circles[i].word == text_input.value.toLowerCase()) {
             const destroyed = circles.splice(i, 1)[0];
             destroy_animation(destroyed)
-            console.log(particles)
             text_input.value = '';
             score += destroyed.word.length;
-            spawn_factor *= (1 - currentDifficulty * destroyed.word.length);
+            spawn_factor *= (1 - currentDifficulty.value * destroyed.word.length);
             if (circles.length == 0) {
                 time_til_next_circle /= 3;
             } else if (circles.length == 1) {
@@ -243,22 +267,21 @@ function start_game() {
     switch (difficultySlider.value) {
         case "1":
             currentDifficulty = Difficulty.Easy;
-            difficultyLabel.innerHTML = 'Difficulty (Easy):'
-            console.log(difficultyLabel)
             break;
         case "2":
             currentDifficulty = Difficulty.Medium;
-            difficultyLabel.innerHTML = 'Difficulty (Medium):'
             break;
         case "3":
             currentDifficulty = Difficulty.Hard;
-            difficultyLabel.innerHTML = 'Difficulty (Hard):'
             break;
         case "4":
             currentDifficulty = Difficulty.Ultrahard;
-            difficultyLabel.innerHTML = 'Difficulty (Ultrahard):'
+            break;
+        default:
+            console.error('Unknown difficulty: ', currentDifficulty)
             break;
     }
+    difficultyLabel.innerHTML = `Difficulty (${currentDifficulty.name}):`
     window.requestAnimationFrame(loop);
 }
 

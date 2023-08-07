@@ -16,8 +16,8 @@
             <a style="background-color: #81a1c1" href="/index.html">int main</a>
             <a style="background-color: #a3be8c" href="/funi.html">funi</a>
             <a style="background-color: #ebcb8b" href="/game.html">game</a>
-            <a style="background-color: #f59335" href="/link2.html">link2</a>
-            <a style="background-color: #bf616a" href="/link3.html">link3</a>
+            <a style="background-color: #f59335" href="/log.html">log</a>
+            <a style="background-color: #bf616a" href="/link.html">link</a>
             <fieldset style="height: 10%">
                 <legend style="font-size: 0.5em; color: white">Funi stuff</legend>
                 <div class="checkbox-with-text">
@@ -26,7 +26,25 @@
                 </div>
             </fieldset>
         </div>
-        <div id="contents"><img src="assets/tuxsuc.jpg" alt="tux succ">
+        <div id="contents"><h1 id="loading-message">Loading</h1>
+<script>
+    //TODO: create my own cors proxy
+    const url = 'https://api.allorigins.win/raw?url=https://pastebin.com/raw/vb43aqyz'
+    //fetch('https://pastebin.com/raw/vb43aqyz')
+    fetch(url)
+    .then(response => response.ok ? response.text(): 'error, sorry')
+    .then(html => {
+        document.getElementById('contents').innerHTML = html;
+        const rainbow_checkbox = document.getElementById('rainbow-toggle');
+        if (rainbow_checkbox.checked) {
+            initial_state.clear()
+            rainbowize_contents()
+        }
+    }).catch((e) => {
+        document.getElementById('loading-message').innerHTML = 
+            'Error. Try refreshing the page'
+    })
+</script>
 
 
         </div>
