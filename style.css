@@ -1,3 +1,8 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
 #sidebar {
     width: 15%;
     height: 100%;
@@ -12,7 +17,6 @@
 }
 
 .checkbox-with-text {
-    position: absolute;
     z-index: 1;
 }
 
@@ -37,7 +41,7 @@ img {
   background-image: linear-gradient(rgb(0 0 0/10%) 0 0);
 }
 
-.sidebar a:active {
+.sidebar a:active, .sidebar a.current {
   background-image: linear-gradient(rgb(0 0 0/20%) 0 0);
 }
 
@@ -137,27 +141,28 @@ footer a {
 }
 
 #paste {
-    font-size: 75%;
+    font-size: 0.75em;
 }
 #paste h1, h2, h3, h4, h5, h6 {
-    font-size: 100%;
+    font-size: 1em;
+    margin-bottom: 0.5em;
 }
 
 @media screen and (max-width: 700px) {
-    * { 
+    * {
         font-size: 20pt;
     }
     #sidebar {
-        width: 100%;
-        height: 42%;
-        position: absolute;
+        position: static;
+        width: 90%;
+        height: 40%;
+        padding: 5%;
     }
     #contents {
         margin-left: 0;
-        margin-top: 88%;
     }
     #my-websit {
-        margin-top: 5%
+        margin-top: 0;
     }
     #sidebar a {
         display: inline-block;
