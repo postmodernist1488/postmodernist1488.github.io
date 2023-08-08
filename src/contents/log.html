@@ -1,4 +1,6 @@
-<h1 id="loading-message">Loading</h1>
+<div id="paste">
+    <h1 id="loading-message">Loading</h1>
+</div>
 <script>
     //TODO: create my own cors proxy
     const url = 'https://api.allorigins.win/raw?url=https://pastebin.com/raw/vb43aqyz'
@@ -6,7 +8,7 @@
     fetch(url)
     .then(response => response.ok ? response.text(): 'error, sorry')
     .then(html => {
-        document.getElementById('contents').innerHTML = html;
+        document.getElementById('paste').innerHTML = html;
         const rainbow_checkbox = document.getElementById('rainbow-toggle');
         if (rainbow_checkbox.checked) {
             initial_state.clear()

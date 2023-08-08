@@ -2,6 +2,9 @@ html, body {
     margin: 0;
     padding: 0;
 }
+span {
+    font-size: unset
+}
 
 #sidebar {
     width: 15%;
@@ -20,8 +23,9 @@ html, body {
     z-index: 1;
 }
 
+
 label {
-    font-size: 10pt;
+    font-size: 0.3em;
     color: white;
     display: block;
 }
@@ -47,6 +51,7 @@ img {
 
 #contents {
     padding-left: 20px;
+    padding-right: 20px;
     margin-left: 17%;
 }
 
@@ -140,8 +145,11 @@ footer a {
     margin: 0 auto;
 }
 
+#paste p {
+    font-size: unset;
+}
 #paste {
-    font-size: 0.75em;
+    font-size: 0.7em;
 }
 #paste h1, h2, h3, h4, h5, h6 {
     font-size: 1em;
