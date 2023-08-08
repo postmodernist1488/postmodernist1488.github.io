@@ -2,7 +2,7 @@ html, body {
     margin: 0;
     padding: 0;
 }
-span {
+span, div {
     font-size: unset
 }
 
@@ -151,9 +151,17 @@ footer a {
 #paste {
     font-size: 0.7em;
 }
-#paste h1, h2, h3, h4, h5, h6 {
+#paste h5, h6 {
     font-size: 1em;
     margin-bottom: 0.5em;
+    cursor: pointer;
+}
+#paste h5 {
+    margin-top: 2em;
+}
+
+#paste h5:hover, h6:hover {
+  background-color: #ccc;
 }
 
 @media screen and (max-width: 700px) {
