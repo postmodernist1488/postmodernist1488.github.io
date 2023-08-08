@@ -34,6 +34,13 @@ img {
     max-width: 100%;
 }
 
+#contents a {
+    color: blue;
+}
+#contents a:visited {
+    color: purple;
+}
+
 #sidebar a {
     display: block;
     width: 100%;
