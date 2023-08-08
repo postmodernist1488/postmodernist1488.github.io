@@ -34,6 +34,13 @@ img {
     max-width: 100%;
 }
 
+#contents a {
+    color: blue;
+}
+#contents a:visited {
+    color: purple;
+}
+
 #sidebar a {
     display: block;
     width: 100%;
@@ -154,13 +161,16 @@ footer a {
 #paste h5, h6 {
     font-size: 1em;
     margin-bottom: 0.5em;
-    cursor: pointer;
+}
+#paste h6 {
+    margin-top: 1em;
 }
 #paste h5 {
-    margin-top: 2em;
+    margin-top: 3em;
+    cursor: pointer;
 }
 
-#paste h5:hover, h6:hover {
+#paste h5:hover {
   background-color: #ccc;
 }
 
