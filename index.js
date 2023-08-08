@@ -17,6 +17,7 @@ function rainbowize_text(text) {
 const initial_state = new Map();
 
 function rainbow(element) {
+    if (element.childNodes.length > 1) wrap_text_in_spans(element);
     if (element.style && element.childNodes.length == 1) {
         initial_state.set(element, element.innerHTML)
         element.innerHTML = rainbowize_text(element.innerText)
@@ -25,6 +26,10 @@ function rainbow(element) {
             rainbow(child)
         });
     }
+}
+
+function rainbowize_contents() {
+    rainbow(contents);
 }
 
 function derainbow(element) {
@@ -44,12 +49,6 @@ function wrap_text_in_spans(element) {
     }
 }
 
-function rainbowize_contents() {
-    if (contents.childNodes.length > 1) {
-        wrap_text_in_spans(contents);
-    }
-    rainbow(contents);
-}
 
 window.onload = () => {
     const sidebar_checkbox = document.getElementById('sidebar-toggle');

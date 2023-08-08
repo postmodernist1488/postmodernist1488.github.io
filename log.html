@@ -26,7 +26,9 @@
                 </div>
             </fieldset>
         </div>
-        <div id="contents"><h1 id="loading-message">Loading</h1>
+        <div id="contents"><div id="paste">
+    <h1 id="loading-message">Loading</h1>
+</div>
 <script>
     //TODO: create my own cors proxy
     const url = 'https://api.allorigins.win/raw?url=https://pastebin.com/raw/vb43aqyz'
@@ -34,13 +36,52 @@
     fetch(url)
     .then(response => response.ok ? response.text(): 'error, sorry')
     .then(html => {
-        document.getElementById('contents').innerHTML = html;
+        document.getElementById('paste').innerHTML = html;
         const rainbow_checkbox = document.getElementById('rainbow-toggle');
         if (rainbow_checkbox.checked) {
             initial_state.clear()
             rainbowize_contents()
         }
+        var h5s = document.getElementsByTagName('h5');
+        console.log(h5s)
+        for (let i = 0; i < h5s.length - 1; i++) {
+            const divWrapper = document.createElement('div');
+            let startElement = h5s[i];
+            let currentElement = startElement.nextSibling;
+            let endElement = h5s[i + 1]
+            while (currentElement !== endElement) {
+                const nextElement = currentElement.nextSibling;
+                divWrapper.appendChild(currentElement);
+                currentElement = nextElement;
+            }
+            startElement.insertAdjacentElement('afterend', divWrapper);
+        }
+
+        // last one
+        let currentElement = h5s[h5s.length - 1].nextSibling;
+        const divWrapper = document.createElement('div');
+        console.log(currentElement)
+        while (currentElement !== null) {
+            console.log(currentElement)
+            const nextElement = currentElement.nextSibling;
+            divWrapper.appendChild(currentElement);
+            currentElement = nextElement;
+        }
+        h5s[h5s.length - 1].insertAdjacentElement('afterend', divWrapper);
+
+
+        for (i = 0; i < h5s.length; i++) {
+            h5s[i].addEventListener("click", function() {
+                var content = this.nextElementSibling;
+                if (content.style.display !== "none") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
     }).catch((e) => {
+        console.log(e)
         document.getElementById('loading-message').innerHTML = 
             'Error. Try refreshing the page'
     })
