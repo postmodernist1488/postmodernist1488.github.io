@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from bs4 import BeautifulSoup
+
 import os
 import sys
 import shutil
@@ -10,22 +12,30 @@ TEMPLATE_PATH = os.path.join(SRC_DIR, 'template.html')
 CONTENTS_PATH = os.path.join(SRC_DIR, 'contents')
 ASSETS_DIR = 'assets/'
 
-def generate_files(template_path, contents_path):
+def generate_files(template_path, contents_path, output_path):
 
-    with open(template_path) as f:
-        contents = f.read()
+    with open(template_path) as fp:
+        soup = BeautifulSoup(fp, 'html.parser')
 
-    search_str = '<div id="contents">'
-    div_location = contents.find(search_str)
-    if div_location == -1:
-        return False
-    paste_loc = div_location + len(search_str)
-    for filename in os.listdir(contents_path):
-        path = os.path.join(contents_path, filename)
-        with open(path) as f:
-            to_paste = f.read()
-        with open(BUILD_DIR + '/' + filename, 'w') as f:
-            f.write(contents[:paste_loc] + to_paste + contents[paste_loc:])
+    sidebar = soup.find('div', id='sidebar')
+    contents = soup.find('div', id='contents')
+
+    for a in sidebar.find_all('a'):
+        ref = a['href']
+
+        with open(contents_path + ref) as fp:
+            to_insert = BeautifulSoup(fp, 'html.parser')
+        
+        classes = a.get('class', [])
+        classes.append('current')
+        a['class'] = classes
+        contents.append(to_insert)
+
+        with open(output_path + ref, 'w') as file:
+            file.write(str(soup))
+
+        contents.clear()
+        a['class'].remove('current')
 
 def main():
 
@@ -37,7 +47,7 @@ def main():
         print(f'{BUILD_DIR} is not a directory!', file=sys.stderr)
         exit(1)
 
-    generate_files(TEMPLATE_PATH, CONTENTS_PATH)
+    generate_files(TEMPLATE_PATH, CONTENTS_PATH, BUILD_DIR)
     for filename in os.listdir(SRC_DIR):
         path = os.path.join(SRC_DIR, filename)
         if path != TEMPLATE_PATH and path != CONTENTS_PATH:
