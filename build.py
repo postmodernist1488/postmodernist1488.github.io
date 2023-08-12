@@ -22,6 +22,7 @@ def generate_files(template_path, contents_path, output_path):
 
     for a in sidebar.find_all('a'):
         ref = a['href']
+        print(f'Generating `{ref}`')
 
         with open(contents_path + ref) as fp:
             to_insert = BeautifulSoup(fp, 'html.parser')
