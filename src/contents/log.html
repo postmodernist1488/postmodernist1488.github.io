@@ -1,3 +1,4 @@
+<div id="hint">HINT: You can tap the dates to show/hide notes.</div>
 <div id="paste">
     <h1 id="loading-message">Loading</h1>
 </div>
@@ -34,14 +35,15 @@
         }
         currentH5.insertAdjacentElement('afterend', divWrapper);
 
-        for (h5 of h5s) {
-            h5.addEventListener("click", function() {
+        for (let i = 0; i < h5s.length; i++) {
+            // show the last one
+            h5s[i].nextElementSibling.classList.add('notes');
+            if (i != h5s.length - 1) {
+                h5s[i].nextElementSibling.classList.add('hidden');
+            }
+            h5s[i].addEventListener("click", function() {
                 var content = this.nextElementSibling;
-                if (content.style.display !== "none") {
-                    content.style.display = "none";
-                } else {
-                    content.style.display = "block";
-                }
+                content.classList.toggle('hidden');
             });
         }
     }).catch((e) => {
